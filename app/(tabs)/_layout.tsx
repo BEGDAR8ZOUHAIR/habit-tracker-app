@@ -1,37 +1,49 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCog, faHouse, faChartSimple } from '@fortawesome/free-solid-svg-icons';
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
+        tabBarStyle: {
+          height: 90,
+          borderTopWidth: 1,
+        },
+        tabBarLabelStyle: { fontSize: 14, marginTop: 5 },
       }}>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: 'Home',
+          headerStyle: { backgroundColor: 'red' },
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <FontAwesomeIcon icon={faHouse as IconDefinition} color={color} size={30} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="progress"
         options={{
-          title: 'Explore',
+          title: 'Progress',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+            <FontAwesomeIcon icon={faChartSimple as IconDefinition} color={color} size={30} />
           ),
         }}
       />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: 'Settings',
+          tabBarIcon: ({ color, focused }) => (
+            <FontAwesomeIcon icon={faCog as IconDefinition} color={color} size={30} />
+          ),
+        }}
+      />
+
     </Tabs>
   );
 }
