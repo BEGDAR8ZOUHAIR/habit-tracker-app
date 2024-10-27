@@ -1,7 +1,6 @@
-import { Link, Stack, router } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import React, { useState } from 'react';
-import { View, SafeAreaView, Pressable } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { View, SafeAreaView, Pressable } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 import {
   GestureDetector,
@@ -13,31 +12,28 @@ import { Text, makeStyles, useTheme } from "@rneui/themed";
 import Animated, {
   FadeIn,
   FadeOut,
-  BounceInRight,
   SlideOutLeft,
-  BounceOutLeft,
   SlideInRight,
 } from 'react-native-reanimated';
-import theme from '@/theme';
 
 const onboardingSteps = [
   {
-    icon: 'snowflake',
-    title: 'Welcome #DEVMay',
-    description: 'Daily React Native tutorials during #DEVMay',
+    image: require('../assets/images/one1.png'),
+    title: 'Track Your Daily Habits',
+    description: 'Easily log and monitor your habits to stay on top of your goals.',
   },
   {
-    icon: 'people-arrows',
-    title: 'Learn and grow together',
-    description: 'Learn by building 24 projects with React Native and Expo',
+    image: require('../assets/images/tow2.png'),
+    title: 'Build Consistency',
+    description: 'Set reminders and notifications to maintain your streaks.',
   },
   {
-    icon: 'book-reader',
-    title: 'Education for Children',
-    description:
-      'Contribute to the fundraiser "Education for Children" to help Save the Children in their effort of providing education to every child',
+    image: require('../assets/images/one1.png'),
+    title: 'Analyze Your Progress',
+    description: 'View detailed insights to see your improvement over time.',
   },
 ];
+
 
 export default function Onboarding() {
   const [screenIndex, setScreenIndex] = useState(0);
@@ -65,7 +61,7 @@ export default function Onboarding() {
   };
 
   const endOnboarding = () => {
-    router.push('/register');  
+    router.push('/register');
   };
 
   const swipes = Gesture.Simultaneous(
@@ -93,39 +89,36 @@ export default function Onboarding() {
       <GestureDetector gesture={swipes}>
         <View style={styles.pageContent} key={screenIndex}>
           <Animated.View entering={FadeIn} exiting={FadeOut}>
-            <FontAwesome5
-              style={styles.image}
-              name={data.icon}
-              size={150}
-              color={theme.theme.colors.primary}
-            />
-          </Animated.View>
-
-          <View style={styles.footer}>
-            <Animated.Text
-              entering={SlideInRight}
-              exiting={SlideOutLeft}
-              style={styles.title}
-            >
-              {data.title}
-            </Animated.Text>
-            <Animated.Text
+            <Animated.Image
               entering={SlideInRight.delay(50)}
               exiting={SlideOutLeft}
-              style={styles.description}
-            >
-              {data.description}
-            </Animated.Text>
+              style={styles.image}
+              source={data.image}
+            />
+          </Animated.View>
+          <Animated.Text
+            entering={SlideInRight}
+            exiting={SlideOutLeft}
+            style={styles.title}
+          >
+            {data.title}
+          </Animated.Text>
+          <Animated.Text
+            entering={SlideInRight.delay(50)}
+            exiting={SlideOutLeft}
+            style={styles.description}
+          >
+            {data.description}
+          </Animated.Text>
 
-            <View style={styles.buttonsRow}>
-              <Text onPress={endOnboarding} style={[styles.buttonText, { color: theme.theme.colors.textPrimary }]}>
-                Skip
-              </Text>
+          <View style={styles.buttonsRow}>
+            <Text onPress={endOnboarding} style={[styles.buttonText, { color: theme.theme.colors.textPrimary }]}>
+              Skip
+            </Text>
 
-              <Pressable onPress={onContinue} style={styles.button}>
-                <Text style={styles.buttonText}>Continue</Text>
-              </Pressable>
-            </View>
+            <Pressable onPress={onContinue} style={styles.button}>
+              <Text style={styles.buttonText}>Continue</Text>
+            </Pressable>
           </View>
         </View>
       </GestureDetector>
@@ -144,26 +137,28 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   image: {
-    alignSelf: 'center',
-    margin: theme.spacingVertical.large,
+    width: '100%',
+    height: 400,
+    resizeMode: 'contain',
+    marginTop: theme.spacingVertical.extraLarge,
   },
   title: {
-    color: theme.colors.textPrimary,
+    color: theme.colors.primary,
     fontSize: theme.fontSize.largeTitle,
     fontFamily: 'Quicksand',
-    letterSpacing: 1.3,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginTop: theme.spacingVertical.giant3,
   },
   description: {
-    color: theme.colors.textPrimary,
-    fontSize: theme.fontSize.title2,
+    color: theme.colors.textSubtitle,
+    fontSize: theme.fontSize.title,
     fontFamily: 'Quicksand',
-  },
-  footer: {
-    marginTop: 'auto',
-  },
-
-  buttonsRow: {
+    textAlign: 'center',
     marginTop: theme.spacingVertical.extraLarge,
+  },
+  buttonsRow: {
+    marginTop: theme.spacingVertical.giant3,
     flexDirection: 'row',
     alignItems: 'center',
     gap: theme.spacingHorizontal.large,
