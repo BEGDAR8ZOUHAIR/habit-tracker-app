@@ -31,7 +31,7 @@ declare module '@rneui/themed' {
 		oraRed: string;
 		oraBlack: string;
 		orange: string;
-		
+
 		blackPrimary: string;
 		blackSecondary: string;
 		blackTertiary: string;
@@ -188,47 +188,47 @@ const theme = createTheme({
 		rawWhite: '#fff',
 	},
 	fontFamily: {
-		bold: 'Quicksand-Bold',
-		semiBold: 'Quicksand-SemiBold',
-		regular: 'Quicksand-Regular',
-		medium: 'Quicksand-Medium',
-		light: 'Quicksand-Light',
+		bold: 'Montserrat-Bold',
+		semiBold: 'Montserrat-SemiBold',
+		regular: 'Montserrat-Regular',
+		medium: 'Montserrat-Medium',
+		light: 'Montserrat-Light',
 
 	},
 	fontSize: {
-		largeTitle: 34,
-		title1: 28, 
-		title2: 22, 
-		title: 20, 
-		headline: 17, 
-		callout: 16, 
+		largeTitle: 36,
+		title1: 28,
+		title2: 22,
+		title: 20,
+		headline: 17,
+		callout: 16,
 	},
 	spacingHorizontal: {
-		extraSmall: 4, 
-		small: 8, 
-		medium: 14, 
-		large: 24, 
-		extraLarge: 32, 
-		giant: 40, 
-		giant2: 60, 
+		extraSmall: 4,
+		small: 8,
+		medium: 14,
+		large: 24,
+		extraLarge: 32,
+		giant: 40,
+		giant2: 60,
 		giant3: 80,
 	},
 	spacingVertical: {
-		extraSmall: 4, 
-		small: 8, 
-		medium: 14, 
-		large: 24, 
-		extraLarge: 32, 
-		giant: 40, 
-		giant2: 60, 
-		giant3: 80, 
+		extraSmall: 4,
+		small: 8,
+		medium: 14,
+		large: 24,
+		extraLarge: 32,
+		giant: 40,
+		giant2: 60,
+		giant3: 80,
 	},
 	border: {
-		small: 4, 
-		medium: 8, 
-		large: 12, 
-		extraLarge: 24, 
-		round: 100, 
+		small: 4,
+		medium: 8,
+		large: 12,
+		extraLarge: 24,
+		round: 100,
 	},
 });
 
