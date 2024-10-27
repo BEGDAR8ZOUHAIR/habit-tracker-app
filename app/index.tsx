@@ -61,7 +61,7 @@ export default function Onboarding() {
   };
 
   const endOnboarding = () => {
-    router.push('/register');
+    router.push('/getStarted');
   };
 
   const swipes = Gesture.Simultaneous(
@@ -110,7 +110,6 @@ export default function Onboarding() {
           >
             {data.description}
           </Animated.Text>
-
           <View style={styles.buttonsRow}>
             <Text onPress={endOnboarding} style={[styles.buttonText, { color: theme.theme.colors.textPrimary }]}>
               Skip
@@ -145,16 +144,13 @@ const useStyles = makeStyles((theme) => ({
   title: {
     color: theme.colors.primary,
     fontSize: theme.fontSize.largeTitle,
-    fontFamily: 'Quicksand',
-    textAlign: 'center',
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamily.bold,
     marginTop: theme.spacingVertical.giant3,
   },
   description: {
     color: theme.colors.textSubtitle,
     fontSize: theme.fontSize.title,
-    fontFamily: 'Quicksand',
-    textAlign: 'center',
+    fontFamily: theme.fontFamily.semiBold,
     marginTop: theme.spacingVertical.extraLarge,
   },
   buttonsRow: {
@@ -166,12 +162,13 @@ const useStyles = makeStyles((theme) => ({
   button: {
     backgroundColor: theme.colors.primary,
     borderRadius: 50,
+    fontFamily: theme.fontFamily.bold,
     alignItems: 'center',
     flex: 1,
   },
   buttonText: {
     color: theme.colors.secondary,
-    fontFamily: 'Quicksand',
+    fontFamily: theme.fontFamily.bold,
     fontSize: theme.fontSize.title,
     padding: theme.spacingVertical.medium,
     paddingHorizontal: theme.spacingHorizontal.large,

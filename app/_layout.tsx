@@ -24,7 +24,9 @@ export default function _layout() {
       <GestureHandlerRootView style={{ flex: 1 }}>
       <Stack>
         <Stack.Screen name="index" options={{headerShown: false}} />
-        <Stack.Screen name="register/index" options={{  }} />
+          <Stack.Screen name="getStarted/index" options={{ headerShown: false}} />
+          <Stack.Screen name="register/index" options={{ }} />
+          <Stack.Screen name="login/index" options={{}} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false  }} />
       </Stack>
     </GestureHandlerRootView>

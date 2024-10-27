@@ -104,7 +104,7 @@ const theme = createTheme({
 	lightColors: {
 		primary: '#5F6CE2',
 		secondary: '#F2F2F7',
-		textPrimary: '#1C1C1E',
+		textPrimary: '#1f1f1f',
 		textSecondary: '#9E9E9E',
 		textSubtitle: '#48484A',
 		textButton: "#5E6175",
@@ -122,7 +122,6 @@ const theme = createTheme({
 		whisper: "#F0F0F8",
 		athensGray: "#E9EAF1",
 		white: "#fff",
-
 		successPrimary: '#1BC100',
 		successSecondary: '#E3FFD6',
 		warningPrimary: '#FFC530',
