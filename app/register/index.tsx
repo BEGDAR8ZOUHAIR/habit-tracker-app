@@ -1,24 +1,63 @@
 import React, { useState } from 'react';
-import { View, SafeAreaView, Pressable, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, Pressable, TouchableOpacity, Alert } from 'react-native';
 import { Text, makeStyles, useTheme } from "@rneui/themed";
 import { useRouter } from 'expo-router';
 import { TextInput, Button, TouchableRipple } from 'react-native-paper';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { IconDefinition, faArrowLeftLong, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function RegisterScreen() {
 	const styles = useStyles();
 	const theme = useTheme();
 	const router = useRouter();
+	const auth = getAuth();
 
 	const [isPasswordVisible, setPasswordVisible] = useState(false);
+	const [name, setName] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [loading, setLoading] = useState(false);
 
-	const handleContinue = () => {
-		router.push('/home');
+	const handleContinue = async () => {
+		if (!name || !email || !password) {
+			Alert.alert('Error', 'Please fill in all fields');
+			return;
+		}
+
+		setLoading(true);
+		try {
+			// Create user with email and password
+			const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+			// Update user profile with name
+			await updateProfile(userCredential.user, {
+				displayName: name
+			});
+
+			// Store the user's name locally
+			await AsyncStorage.setItem('userName', name);
+
+			Alert.alert('Success', 'Account created successfully!');
+			router.push('/home');
+		} catch (error: any) {
+			let errorMessage = 'An error occurred during registration';
+			if (error.code === 'auth/email-already-in-use') {
+				errorMessage = 'This email is already registered';
+			} else if (error.code === 'auth/invalid-email') {
+				errorMessage = 'Invalid email address';
+			} else if (error.code === 'auth/weak-password') {
+				errorMessage = 'Password should be at least 6 characters';
+			}
+			Alert.alert('Error', errorMessage);
+		} finally {
+			setLoading(false);
+		}
 	};
 
-	const handleGoogleSignUp = () => {
-		// Handle Google sign-up logic	
+	const handleGoogleSignUp = async () => {
+		Alert.alert('Coming Soon', 'Google Sign-in will be implemented in the next update');
 	};
 
 	const handleLogin = () => {
@@ -38,7 +77,7 @@ export default function RegisterScreen() {
 			</View>
 
 			<View style={styles.content}>
-				<Text style={styles.title}>Let’s get started</Text>
+				<Text style={styles.title}>Let's get started</Text>
 				<Text style={styles.description}>
 					Sign up now for the habit tracker app and embark on a journey of positive change!
 				</Text>
@@ -46,6 +85,8 @@ export default function RegisterScreen() {
 					<TextInput
 						mode="outlined"
 						label="Name"
+						value={name}
+						onChangeText={setName}
 						style={styles.input}
 						placeholderTextColor={theme.theme.colors.textSubtitle}
 						outlineColor={theme.theme.colors.primary}
@@ -55,6 +96,8 @@ export default function RegisterScreen() {
 					<TextInput
 						mode="outlined"
 						label="Email"
+						value={email}
+						onChangeText={setEmail}
 						style={styles.input}
 						placeholderTextColor={theme.theme.colors.textSubtitle}
 						keyboardType="email-address"
@@ -67,6 +110,8 @@ export default function RegisterScreen() {
 						<TextInput
 							mode="outlined"
 							label="Password"
+							value={password}
+							onChangeText={setPassword}
 							style={styles.input}
 							placeholderTextColor={theme.theme.colors.textSubtitle}
 							secureTextEntry={!isPasswordVisible}
@@ -91,6 +136,8 @@ export default function RegisterScreen() {
 				<Button
 					mode="contained"
 					onPress={handleContinue}
+					loading={loading}
+					disabled={loading}
 					style={styles.continueButton}
 					contentStyle={{ paddingVertical: theme.theme.spacingVertical.medium }}
 				>
@@ -101,6 +148,7 @@ export default function RegisterScreen() {
 					mode="outlined"
 					icon="google"
 					onPress={handleGoogleSignUp}
+					disabled={loading}
 					style={styles.googleButton}
 					contentStyle={{ paddingVertical: theme.theme.spacingVertical.medium }}
 					labelStyle={styles.googleButtonText}
@@ -117,6 +165,7 @@ export default function RegisterScreen() {
 }
 
 const useStyles = makeStyles((theme) => ({
+	// Your existing styles remain the same
 	container: {
 		flex: 1,
 		backgroundColor: theme.colors.background,
@@ -125,7 +174,6 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: theme.spacingVertical.extraLarge,
 		marginHorizontal: theme.spacingHorizontal.large,
 		alignItems: 'flex-start',
-
 	},
 	content: {
 		paddingHorizontal: theme.spacingHorizontal.large,
@@ -147,7 +195,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	inputContainer: {
 		marginBottom: theme.spacingVertical.extraLarge,
-		marginHorizontal: theme.spacingHorizontal.medium,
 	},
 	passwordContainer: {
 		position: 'relative',

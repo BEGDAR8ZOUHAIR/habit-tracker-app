@@ -1,7 +1,15 @@
-import {  View  } from 'react-native';
+import { View } from 'react-native';
 import { Text, makeStyles } from "@rneui/themed";
+import firestore from '@react-native-firebase/firestore';
+import { useEffect } from 'react';
 
 export default function HomeScreen() {
+  const getHabits = async () => {
+    const habits = await firestore().collection('habits').get();
+  }
+  useEffect(() => {
+    console.log("getHabits", getHabits());
+  })
   const styles = useStyle();
   return (
     <View style={styles.container}>
